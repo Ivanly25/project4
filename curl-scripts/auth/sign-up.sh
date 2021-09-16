@@ -1,4 +1,6 @@
 #!/bin/bash
+EMAIL ="a@aa.com"
+PASSWORD ="aaaaa"
 
 API="http://localhost:4741"
 URL_PATH="/sign-up"
