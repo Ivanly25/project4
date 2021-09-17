@@ -42,8 +42,10 @@ const router = express.Router()
 // CREATE
 // POST /projects
 router.post('/projects', requireToken, (req, res, next) => {
+  console.log(req.user, 'The User making the request')
   // find the list we're going add the project to
   req.body.project.owner = req.user.id
+  console.log(req.body.project, 'The product data')
   Project.create(req.body.project)
   // respond to successful `create` with status 201 and JSON of new "project"
     .then((project) => res.status(201).json({ project: project.toObject() }))
