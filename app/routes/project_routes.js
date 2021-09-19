@@ -41,7 +41,7 @@ const router = express.Router()
 // }
 // CREATE
 // POST /projects
-router.post('/projects', requireToken, (req, res, next) => {
+router.post('/create-project', requireToken, (req, res, next) => {
   console.log(req.user, 'The User making the request')
   // find the list we're going add the project to
   req.body.project.owner = req.user.id
