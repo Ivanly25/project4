@@ -68,10 +68,10 @@ router.get('/projects/:id', requireToken, (req, res, next) => {
 // GET All projects
 router.get('/projects', (req, res, next) => {
   Project.find()
-    .then((projects) => {
-      return projects.map((project) => project.toObject())
+    .then((project) => {
+      return project.map((project) => project.toObject())
     })
-    .then((projects) => res.status(200).json({ projects: projects }))
+    .then((project) => res.status(200).json({ project: project }))
     .catch(next)
 })
 // UPDATE
