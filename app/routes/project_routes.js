@@ -5,6 +5,7 @@ const passport = require('passport')
 
 // pull in Mongoose model for projects
 const Project = require('../models/project')
+const User = require('../models/user')
 const customErrors = require('../../lib/custom_errors')
 
 // this is a collection of methods that help us detect situations when we need
@@ -18,6 +19,7 @@ const requireOwnership = customErrors.requireOwnership
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { project: { title: '', text: 'foo' } } -> { project: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
+// const user = require('../models/user')
 // const projects = require('../models/project')
 // const { request } = require('chai')
 
@@ -57,7 +59,11 @@ router.get('/projects/:id/', requireToken, (req, res, next) => {
 })
 // GET All projects
 router.get('/projects', (req, res, next) => {
-  Project.find({ owner: req.body.user })
+  console.log(req)
+  User.findById(req.query.user)
+    .then(user => Project
+      .find({ owner: user })
+    )
     .then((project) => {
       return project.map((project) => project.toObject())
     })
