@@ -29,23 +29,13 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-// {
-// "project": {
-//       "projectName": "neww project",
-//       "shortDescription": "built a fully functional tic tac toe game",
-//       "toolsUsed": "html, css, javaScript, bootStrap",
-//       "laborTime": "0 hours",
-//       "done": true,
-//       "payer": "3rd party company"
-//     }
-// }
 // CREATE
 // POST /projects
 router.post('/create-project', requireToken, (req, res, next) => {
-  console.log(req.user, 'The User making the request')
+  // console.log(req.user, 'The User making the request')
   // find the list we're going add the project to
   req.body.project.owner = req.user.id
-  console.log(req.body.project, 'The product data')
+  // console.log(req.body.project, 'The product data')
   Project.create(req.body.project)
   // respond to successful `create` with status 201 and JSON of new "project"
     .then((project) => res.status(201).json({ project: project.toObject() }))
@@ -67,7 +57,7 @@ router.get('/projects/:id/', requireToken, (req, res, next) => {
 })
 // GET All projects
 router.get('/projects', (req, res, next) => {
-  Project.find()
+  Project.find({ owner: req.body.user })
     .then((project) => {
       return project.map((project) => project.toObject())
     })
