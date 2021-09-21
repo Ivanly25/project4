@@ -18,7 +18,7 @@ const requireOwnership = customErrors.requireOwnership
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { project: { title: '', text: 'foo' } } -> { project: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
-const project = require('../models/project')
+// const projects = require('../models/project')
 // const { request } = require('chai')
 
 // passing this as a second argument to `router.<verb>` will make it
@@ -57,7 +57,7 @@ router.post('/create-project', requireToken, (req, res, next) => {
 
 // SHOW
 // GET /projects/5a7db6c74d55bc51bdf39793/e13l1420995bc51bdf39793
-router.get('/projects/:id', requireToken, (req, res, next) => {
+router.get('/projects/:id/', requireToken, (req, res, next) => {
   Project.findById(req.params.id)
     .then(handle404)
     // .then((list) => list.projects.id(req.params.projectId))
@@ -84,7 +84,7 @@ router.patch('/projects/:id', requireToken, removeBlanks, (req, res, next) => {
   Project.findById(req.params.id)
     .then(handle404)
     // .then(list => list.projects.id(req.params.projectId))
-    .then((list) => {
+    .then((project) => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
       // const project = project.id(req.params.projectId)
